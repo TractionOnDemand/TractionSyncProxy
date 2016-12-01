@@ -1,0 +1,26 @@
+{
+  "name": "sf-google-sync",
+  "version": "0.0.1",
+  "description": "Traction on Demand - Sync Proxy for Salesforce <-> Google Sheets",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "Ricardo Visbal and Doug Jodrell",
+  "dependencies": {
+    "pg": "~2.11.1",
+    "express": "~4.4.1",
+    "body-parser": "~1.10.1",
+    "method-override": "~2.3.1",
+    "underscore": "~1.7.0",
+    "request": "^2.61.0",
+    "restler": "3.4.0",
+    "googleapis": "~14.2.0",
+    "google-spreadsheet": "~2.0.3",
+    "ejs": "~2.5.3"
+  },
+  "engines": {
+    "node": "0.10.x"
+  }
+}
