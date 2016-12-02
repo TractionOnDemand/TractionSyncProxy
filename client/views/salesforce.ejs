@@ -1,0 +1,327 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+
+    <title>Salesforce - Google Sheet Integration</title>
+
+    <link rel="stylesheet" href="../css/bootstrap.css" />
+    <link rel="stylesheet" href="../css/bootstrap-theme.css" />
+    <link rel="stylesheet" href="../css/backgrid.css" />
+    <link rel="stylesheet" href="../css/extensions/paginator/backgrid-paginator.css" />
+    <link rel="stylesheet" type="text/css" href="../assets/styles/salesforce-lightning-design-system.css" />
+
+</head>
+<!--
+const STEP_GET_AUTH_TOKENS      = 9;
+const STEP_GET_META_DATA        = 10;
+const STEP_GET_LIST_DATA        = 11;
+const STEP_CREATE_SHEET         = 12;
+const STEP_UPDATE_REQUEST       = 13;
+const STEP_WRITE_SHEET_META     = 14;
+const STEP_WRITE_SHEET_DATA     = 15;
+const STEP_SETUP_LISTENER       = 16;
+const STEP_OPEN_DOCUMENT        = 17;
+
+slds-is-complete
+slds-is-current
+slds-is-lost
+slds-is-incomplete
+-->
+<body>
+
+    <div id="main">
+        <div class="container">
+
+            <div class="slds-grid padding-top">
+                <div class="slds-tabs--path" role="application">
+                    <ul class="slds-tabs--path__nav" role="tablist">
+
+                        <li id="10" class="slds-tabs--path__item slds-is-incomplete" role="presentation">
+                            <a class="slds-tabs--path__link" id="tabs-path-1" aria-controls="content-path-1" aria-selected="false" tabindex="-1" role="tab" href="javascript:void(0);" aria-live="assertive">
+                            <span class="slds-tabs--path__stage">
+                                <svg aria-hidden="true" class="slds-icon slds-icon--x-small">
+                                    <use xlink:href="../assets/icons/utility-sprite/svg/symbols.svg#check"></use>
+                                </svg>
+                            </span>
+                            <span class="slds-tabs--path__title">Read SalesForce Data</span>
+                            </a>
+                        </li>
+
+                        <li id="12" class="slds-tabs--path__item slds-is-incomplete" role="presentation">
+                            <a class="slds-tabs--path__link" id="tabs-path-1" aria-controls="content-path-1" aria-selected="false" tabindex="-1" role="tab" href="javascript:void(0);" aria-live="assertive">
+                            <span class="slds-tabs--path__stage">
+                                <svg aria-hidden="true" class="slds-icon slds-icon--x-small">
+                                    <use xlink:href="../assets/icons/utility-sprite/svg/symbols.svg#check"></use>
+                                </svg>
+                            </span>
+                            <span class="slds-tabs--path__title">Create Google Sheet</span>
+                            </a>
+                        </li>
+
+                        <li id="13" class="slds-tabs--path__item slds-is-incomplete" role="presentation">
+                            <a class="slds-tabs--path__link" id="tabs-path-1" aria-controls="content-path-1" aria-selected="false" tabindex="-1" role="tab" href="javascript:void(0);" aria-live="assertive">
+                            <span class="slds-tabs--path__stage">
+                                <svg aria-hidden="true" class="slds-icon slds-icon--x-small">
+                                    <use xlink:href="../assets/icons/utility-sprite/svg/symbols.svg#check"></use>
+                                </svg>
+                            </span>
+                            <span class="slds-tabs--path__title">Write Data to Sheet</span>
+                            </a>
+                        </li>
+
+                        <li id="16" class="slds-tabs--path__item slds-is-incomplete" role="presentation">
+                            <a class="slds-tabs--path__link" id="tabs-path-1" aria-controls="content-path-1" aria-selected="false" tabindex="-1" role="tab" href="javascript:void(0);" aria-live="assertive">
+                            <span class="slds-tabs--path__stage">
+                                <svg aria-hidden="true" class="slds-icon slds-icon--x-small">
+                                    <use xlink:href="../assets/icons/utility-sprite/svg/symbols.svg#check"></use>
+                                </svg>
+                            </span>
+                            <span class="slds-tabs--path__title">Open Google Sheet</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- STATUS MESSAGE AND PROGRESS BARS -->
+            <div class="slds-grid">
+                <div class="slds-col padding-top">
+                    <div id="main-msg" <div class="slds-text-heading--medium">>
+                        Waiting...
+                    </div>
+
+                    <div id="myProgress_Container" class="padding-top" style="display:none" >
+                        <div id="myProgress" >
+                            <div id="myBar"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SPINNER -->
+            <div class="slds-grid">
+                <div class="slds-col">
+                    <div class="slds-spinner slds-spinner--large" aria-hidden="false" role="alert">
+                        <div class="slds-spinner__dot-a"></div>
+                        <div class="slds-spinner__dot-b"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <script src="../js/jquery.js"></script>
+    <script src="../js/underscore.js"></script>
+    <script src="../js/spin.min.js"></script>
+
+    <style>
+        .padding-top {
+            padding-top: 20px;
+        }
+        #myProgress {
+            position: relative;
+            border-radius : 15px;
+            width: 100%;
+            height: 30px;
+            background-color: #999999;
+        }
+
+        #myBar {
+            position: absolute;
+            border-radius : 15px;
+            width: 0%;
+            height: 100%;
+            background-color: #5cb85c;
+        }
+    </style>
+
+    <script type="text/javascript">
+        var processTotal = 8;
+        var processCount = 0;
+
+
+        function myProgressBar(barCounter, barTotal) {
+            progressBar("#myProgress", "#myBar",barCounter, barTotal);
+        }
+
+        function progressBar(progressId, barId, barCounter, barTotal) {
+
+            var totalWidth = $(progressId).width();
+            var portionWidth = totalWidth/barTotal;
+            var width = portionWidth * barCounter;
+
+            $(barId).width(width);
+        }
+    </script>
+
+
+    <script type="text/javascript">
+        var DEBUG = false;
+        var post_timeout = 30121;//30seconds
+
+        var spin = true;
+        //var metadataResult = {};
+        var requestId = "<%= requestId %>";
+        var nextStep = "<%= nextStep %>";
+        var message = "<%= message %>";
+    </script>
+
+
+    <script type="text/javascript">
+        function initSalesforceHandler() {
+            $.post("/salesforce/handler", {
+                requestId: requestId,
+                nextStep: nextStep
+            }, function(data, status) {
+
+                getSalesforceHandler(data);
+
+            });
+        }
+    </script>
+
+    <script type="text/javascript">
+
+        $.ajaxSetup({
+            type: 'POST',
+            timeout: post_timeout,
+            error: function(xhr) {
+                displayMessage('Error: ' + xhr.status + ' ' + xhr.statusText);
+            }
+        });
+
+    </script>
+
+    <script type="text/javascript">
+
+        function getSalesforceHandler(data) {
+            //console.log(data);
+            displayMessage(data.page_message);
+
+            console.log('pending: '+data.pending_step);
+            console.log('next: '+data.next_step);
+
+            if (data.next_step == 10) {
+                $("#10").removeClass("slds-is-incomplete");
+                $("#10").addClass("slds-is-current");
+            } else if (data.next_step == 12) {
+                $("#10").removeClass("slds-is-current");
+                $("#10").addClass("slds-is-complete");
+                $("#12").removeClass("slds-is-incomplete");
+                $("#12").addClass("slds-is-current");
+            } else if (data.next_step == 13) {
+                $("#12").removeClass("slds-is-current");
+                $("#12").addClass("slds-is-complete");
+                $("#13").removeClass("slds-is-incomplete");
+                $("#13").addClass("slds-is-current");
+            } else if (data.next_step == 16) {
+                $("#13").removeClass("slds-is-current");
+                $("#13").addClass("slds-is-complete");
+                $("#16").removeClass("slds-is-incomplete");
+                $("#16").addClass("slds-is-current");
+            }
+
+            $.post("/salesforce/handler", {
+                sf_sync: data
+            }, function(data, status) {
+
+                console.log('pending: '+data.pending_step);
+                console.log('next: '+data.next_step);
+
+
+                displayMessage(data.page_message);
+
+                if (data.next_step == 17 && !DEBUG) {
+
+                    document.location = data.macro_url;
+                }
+                else if (data.next_step == 16) {
+                    initAddRows(data);
+                } else {
+                    if (data.next_step == 15) {
+                        if (!data.list_data.rows) {
+                            data.list_data.rows = [];
+                        }
+                    }
+                    getSalesforceHandler(data);
+                }
+            });
+        }
+    </script>
+
+
+
+    <script type="text/javascript">
+        var batchSize = 20;
+        var barCounter2 = 0;
+        var barTotal2 = 0;
+        var startRowIndex = 1;
+        var rowCount = 0;
+
+        function initAddRows(data) {
+            barCounter2 = 0;
+
+            $("#myProgress_Container").show();
+            var a = data.list_data.rows;
+            rowCount = a.length;
+            data["rowCount"] = rowCount;
+            barTotal2 = Math.floor(a.length/batchSize) + 1;
+
+            startRowIndex = 1;
+            addRows(data, a);
+        }
+
+
+        function addRows(data, a) {
+
+            if (a.length != undefined && a.length > 0) {
+                var batchRows = a.splice(0,batchSize);
+                var isLastRow = (a.length < 1);
+                barCounter2++;
+                myProgressBar(barCounter2, barTotal2);
+
+                displayMessage("Adding Row(s) " + startRowIndex + " / " +  rowCount);
+
+                $.post("/salesforce/rows", {
+                    spreadsheet_id: data.doc_id,
+                    sheet_data_id: data.sheets.data_id,
+                    token : data.google_access_token,
+                    columns : data.columns,
+                    batchRows: batchRows,
+                    startRowIndex: startRowIndex,
+                    isLastRow : isLastRow
+                }, function(result, status) {
+
+                    startRowIndex += batchRows.length;
+                    addRows(data, a);
+                });
+            }
+            else {
+                $("#myProgress_Container").hide();
+                    getSalesforceHandler(data);
+            }
+        }
+    </script>
+
+    <script type="text/javascript">
+        function displayMessage(msg) {
+            console.log(msg);
+            $("#main-msg").html(msg);
+        }
+    </script>
+
+    <script type="text/javascript">
+         $( document ).ready(function() {
+            displayMessage(message);
+            initSalesforceHandler();
+        });
+
+    </script>
+
+</body>
+
+</html>
