@@ -17,28 +17,28 @@ pollution of your Salesforce environment with dirty data.
 Export Process:
 ---------------
 
-1)  SFCD sends export request to the Heroku server.
+1) SFCD sends export request to the Heroku server.
 
-2)  Heroku performs OAuth request for both SF and Google.
+2) Heroku performs OAuth request for both SF and Google.
 
-3)  Heroku retrieves data from SFDC.
+3) Heroku retrieves data from SFDC.
 
-4)  Heroku create/update Google Sheet document.
+4) Heroku create/update Google Sheet document.
 
-5)  Heroku attaches Google Web App script to Google Sheet.
+5) Heroku attaches Google Web App script to Google Sheet.
 
 Update Process:
 ---------------
 
-1)  Google Sheet triggers the Web App when document is updated.
+1) Google Sheet triggers the Web App when document is updated.
 
-2)  Google Web App sends notification to Heroku.
+2) Google Web App sends notification to Heroku.
 
-3)  Heroku retrieves modified data from Google Sheet.
+3) Heroku retrieves modified data from Google Sheet.
 
-4)  Heroku sends data update request to SFDC.
+4) Heroku sends data update request to SFDC.
 
-5)  Heroku updates Google Sheet with success/error message from SFDC.
+5) Heroku updates Google Sheet with success/error message from SFDC.
 
 Heroku Sync Proxy
 =================
@@ -68,7 +68,7 @@ notifications to the Heroku app when such changes occur.
 
 ### **Heroku Setup**
 
-1)  Download and Install Heroku Command Line Tools from: <https://devcenter.heroku.com/articles/heroku-cli>
+1) Download and Install Heroku Command Line Tools from: <https://devcenter.heroku.com/articles/heroku-cli>
 
 ![](/documentation/media/image2.png)
 
@@ -79,12 +79,12 @@ notifications to the Heroku app when such changes occur.
         i.  Note: you may have to run the installation as the Admin user
             of your computer
 
-2)  Create a Heroku account: <https://signup.heroku.com/login>
+2) Create a Heroku account: <https://signup.heroku.com/login>
 
 ![](/documentation/media/image3.png)
 
 
-3)  Create a new Heroku App: <https://dashboard.heroku.com/new>
+3) Create a new Heroku App: <https://dashboard.heroku.com/new>
 
     a. Refer to the official Heroku documentation for detailed help: https://devcenter.heroku.com
 
@@ -95,7 +95,7 @@ notifications to the Heroku app when such changes occur.
         This will be referred to as <HEROKU_APP_URL> throughout
         this document.
 
-4)  Add PostgreSQL to the Heroku app
+4) Add PostgreSQL to the Heroku app
 
     a.  From the ‘Resources’ tab, enter ‘Postgres’ into the Add-ons
         search and select ‘Heroku Postgres’ from the search results.
@@ -114,7 +114,7 @@ notifications to the Heroku app when such changes occur.
 
     e.  The URI value is the <DATABASE_URL>
 
-5)  Setup Environment Variables.
+5) Setup Environment Variables.
 
     a.  From the settings tab, click ‘Reveal Config Vars’
 
@@ -125,12 +125,12 @@ notifications to the Heroku app when such changes occur.
 
         NODE_PATH = ./server
 
-6)  Download and Install Git on your local machine: <https://git-scm.com/download/>
+6) Download and Install Git on your local machine: <https://git-scm.com/download/>
 
 ![](/documentation/media/image8.png)
 
 
-7)  Install node.js, if not already installed.
+7) Install node.js, if not already installed.
 
     a.  In a browser, go to: https://nodejs.org/en/download/
 
@@ -140,7 +140,7 @@ notifications to the Heroku app when such changes occur.
 
     c.  Run the setup wizard.
 
-8)  Checkout the node.js server from GitHub.
+8) Checkout the node.js server from GitHub.
 
     a.  Open the new Git bash console that you installed.
 
@@ -152,7 +152,7 @@ notifications to the Heroku app when such changes occur.
 
         git clone https://github.com/TractionOnDemand/TractionSyncProxy.git
 
-9)  CD into the repo directory
+9) CD into the repo directory
 
     a.  Type in the command prompt:
 
@@ -193,7 +193,7 @@ notifications to the Heroku app when such changes occur.
 
 ### **salesforce.com Setup**
 
-1)  Install the Managed Package.
+13) Install the Managed Package.
 
     a.  https://login.salesforce.com/packaging/installPackage.apexp?p0=04t50000000RXpc
 
@@ -206,7 +206,7 @@ notifications to the Heroku app when such changes occur.
 
     d.  Select Yes, grant access… and click “Continue”
 
-2)  Add the Custom Setting default value for the Heroku Endpoint URL.
+14) Add the Custom Setting default value for the Heroku Endpoint URL.
 
     a.  Go to: Setup -> Develop -> Custom Settings Google Sheet
         Sync (Manage)
@@ -219,7 +219,7 @@ notifications to the Heroku app when such changes occur.
         Endpoint URL = <HEROKU_APP_URL>/salesforce
         (e.g. https://your-heroku-app-name.herokuapp.com/salesforce)
 
-3)  Add the Heroku App as a Connected App in SalesForce
+15) Add the Heroku App as a Connected App in SalesForce
 
     a.  Setup -> Create -> Apps -> Connected Apps (New).
 
@@ -241,7 +241,7 @@ notifications to the Heroku app when such changes occur.
     a.  Record the ‘Consumer Key’ and ‘Consumer Secret’ for the next
         step.
 
-1)  Back on your Heroku app, add the following environment variables:
+16) Back on your Heroku app, add the following environment variables:
 
     a.  Heroku > Settings > click “Reveal Config Vars”
 
@@ -255,7 +255,7 @@ notifications to the Heroku app when such changes occur.
 
         SF_SECRET = use the ‘Consumer Secret’ from the previous step.
 
-2)  Update the ‘Heroku Sync’ Remote Site settings with your Heroku App
+17) Update the ‘Heroku Sync’ Remote Site settings with your Heroku App
     URL
 
     a.  In Salesforce go to: Setup -> Security Controls > Remote
@@ -263,7 +263,7 @@ notifications to the Heroku app when such changes occur.
 
         Remote Site URL = <HEROKU_APP_URL>
 
-3)  Add the ‘List View Exporter’ Lightning component to the Opportunity
+18) Add the ‘List View Exporter’ Lightning component to the Opportunity
     page layout
 
     a.  Switch to Lightning Experience if not already enabled.
@@ -315,7 +315,7 @@ notifications to the Heroku app when such changes occur.
 
 ### **Google Web App Setup**
 
-1)  Create a project:
+19) Create a project:
 
     a.  open the Developer Console: https://console.developers.google.com
 
@@ -325,14 +325,14 @@ notifications to the Heroku app when such changes occur.
 
     c.  Enter a project name then click ‘Create’ (this might take a few minutes)
 
-2)  Enable Drive API and Sheets API
+20) Enable Drive API and Sheets API
 
 ![](/documentation/media/image14.png)
 
 
-3)  Click ‘Credentials’ from the nav menu.
+21) Click ‘Credentials’ from the nav menu.
 
-4)  Setup Credentials
+22) Setup Credentials
 
     a.  On the Credentials tab, select ‘OAuth client ID’ from the
         ‘Create credentials’ dropdown.
@@ -355,37 +355,37 @@ notifications to the Heroku app when such changes occur.
         (referred to as <GOOGLE_CLIENT_ID> and
         <GOOGLE_CLIENT_SECRET> in this document).
 
-5)  On the ‘OAuth consent screen’ tab, enter all appropriate fields
+23) On the ‘OAuth consent screen’ tab, enter all appropriate fields
 
     a.  Enter the Product name shown to users
 
     b.  Click Save
 
-6)  Create a new Google Doc on your Google Drive.
+24) Create a new Google Doc on your Google Drive.
 
     a.  Navigate to drive.google.com
 
     b.  Click “New” > select “Google Doc”
 
-7)  From the Tools menu, select ‘Script editor…’
+25) From the Tools menu, select ‘Script editor…’
 
 ![](/documentation/media/image15.png)
 
     a.  This will open a Google doc called “Code.js”
 
-8)  Copy/paste the contents of
+26) Copy/paste the contents of
     <GIT_PROJECT_FOLDER>/webapp/google_sync_apps.gs into the Code.js Google Doc
 
     a.  Remove the current text from the file and replace with the text
         from the google_sync_apps.gs file.
 
-9)  Save the project: File -> Save
+27) Save the project: File -> Save
 
     a.  You will be asked to provide a name for the doc.
 
     b.  Eg. SFDC Script Doc
 
-10) Add the Heroku app URL to Script Properties:
+28) Add the Heroku app URL to Script Properties:
 
     a.  File -> Project Properties
 
@@ -399,7 +399,7 @@ notifications to the Heroku app when such changes occur.
 
         HEROKU_APP_URL = <HEROKU_APP_URL>
 
-11) Publish the app:
+29) Publish the app:
 
     a.  Click on the “Publish” tab and select “Deploy as web app”
 
@@ -422,10 +422,10 @@ notifications to the Heroku app when such changes occur.
 
         i.  Click to Allow
 
-12) Copy the web app URL (referred to as <GOOGLE_WEBAPP_URL>)
+30) Copy the web app URL (referred to as <GOOGLE_WEBAPP_URL>)
     for entering into Heroku as a Config variable in the next steps.
 
-13) In your Heroku app, you will add additional Configuration Variables:
+31) In your Heroku app, you will add additional Configuration Variables:
 
     a.  Go into your Heroku app in a browser
 
