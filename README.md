@@ -195,7 +195,7 @@ notifications to the Heroku app when such changes occur.
 
 13) Install the Managed Package.
 
-    a.  https://login.salesforce.com/packaging/installPackage.apexp?p0=04t50000000RXpc
+    a.  https://login.salesforce.com/packaging/installPackage.apexp?p0=04t50000000RXpr 
 
     b.  Click to install for all users.
 
