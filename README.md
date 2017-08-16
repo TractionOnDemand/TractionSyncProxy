@@ -363,7 +363,7 @@ notifications to the Heroku app when such changes occur.
 
 24) Create a new Google Doc on your Google Drive.
 
-    a.  Navigate to drive.google.com
+    a.  Navigate to https://drive.google.com
 
     b.  Click “New” > select “Google Doc”
 
@@ -371,10 +371,10 @@ notifications to the Heroku app when such changes occur.
 
 ![](/documentation/media/image15.png)
 
-    a.  This will open a Google doc called “Code.js”
+    a.  This will open a Google doc called “Code.gs”
 
 26) Copy/paste the contents of
-    <GIT_PROJECT_FOLDER>/webapp/google_sync_apps.gs into the Code.js Google Doc
+    <GIT_PROJECT_FOLDER>/webapp/google_sync_apps.gs into the Code.gs Google Doc
 
     a.  Remove the current text from the file and replace with the text
         from the google_sync_apps.gs file.
